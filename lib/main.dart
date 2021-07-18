@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertipcalculator/imagePicker.dart';
 
 import 'homePage.dart';
 
@@ -13,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
 
-      home: ImagePickerClass(),
+      home: HomePage(),
     );
   }
 }

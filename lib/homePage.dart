@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertipcalculator/controller.dart';
+import 'package:get/get.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -13,6 +15,7 @@ class _HomePageState extends State<HomePage> {
   );
 
 
+  var tipC=Get.put(TipController());
   ///Its time to implement the logic and make this thing functional
 
   ///prepare the variables
@@ -63,32 +66,37 @@ class _HomePageState extends State<HomePage> {
                   Text("Bills",style: titleStyle,),
                   SizedBox(height: 25.0,),
                   TextField(
-                    controller: billController,
-                    onEditingComplete: (){
-                      setState(() {
-                        if(billController.text.isNotEmpty){
-                          bill=double.parse(billController.text);
-                        }else{
-                          bill=0;
-                        }
-                        FocusScope.of(context).unfocus();
-                        calculateTheTip();
-                      });
-                    },
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Color(0xFFF3F8FB),
-                      border: InputBorder.none,
-                      hintText: "eg. 100",
-                      prefixIcon: Icon(Icons.attach_money_rounded)
+                controller: billController,
+                onEditingComplete: (){
+
+                  if(billController.text.isNotEmpty){
+                    tipC.bill.value=double.parse(billController.text);
+                  }else{
+                    tipC.bill.value=0;
+                  }
+                  FocusScope.of(context).unfocus();
+                  tipC.calculateTheTip();
+
+                },
+                decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Color(0xFFF3F8FB),
+                    border: InputBorder.none,
+                    hintText: "eg. 100",
+                    hintStyle: TextStyle(
+                      //fontSize: 24.0,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF00474B).withOpacity(0.4)
                     ),
-                    textAlign: TextAlign.end,
-                    style: TextStyle(
-                      fontSize: 24.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF00474B)
-                    ),
-                  ),
+                    prefixIcon: Icon(Icons.attach_money_rounded)
+                ),
+                textAlign: TextAlign.end,
+                style: TextStyle(
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF00474B)
+                ),
+              ),
                   SizedBox(height: 35.0,),
                   Text("Select Tip %",style: titleStyle,),
                   SizedBox(height: 15.0,),
@@ -96,11 +104,14 @@ class _HomePageState extends State<HomePage> {
                   Row(
                     children: [
                       Expanded(child: FlatButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5.0)
+                        ),
                         onPressed: (){
-                          setState(() {
-                            tip=0.05;
-                            calculateTheTip();
-                          });
+
+                            tipC.tip.value=0.05;
+                            tipC.calculateTheTip();
+
                         },
                         height: 50.0,
                         color: Color(0xFF00474B),
@@ -112,11 +123,14 @@ class _HomePageState extends State<HomePage> {
                       )),
                       SizedBox(width: 20.0,),
                       Expanded(child: FlatButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5.0)
+                        ),
                         onPressed: (){
-                          setState(() {
-                            tip=0.1;
-                            calculateTheTip();
-                          });
+
+                            tipC.tip.value=0.1;
+                            tipC.calculateTheTip();
+
                         },
                         height: 50.0,
                         color: Color(0xFF00474B),
@@ -132,11 +146,14 @@ class _HomePageState extends State<HomePage> {
                   Row(
                     children: [
                       Expanded(child: FlatButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5.0)
+                        ),
                         onPressed: (){
-                          setState(() {
-                            tip=.15;
-                            calculateTheTip();
-                          });
+
+                            tipC.tip.value=.15;
+                            tipC.calculateTheTip();
+
                         },
                         height: 50.0,
                         color: Color(0xFF00474B),
@@ -148,11 +165,14 @@ class _HomePageState extends State<HomePage> {
                       )),
                       SizedBox(width: 20.0,),
                       Expanded(child: FlatButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5.0)
+                        ),
                         onPressed: (){
-                          setState(() {
-                            tip=0.25;
-                            calculateTheTip();
-                          });
+
+                            tipC.tip.value=0.25;
+                            tipC.calculateTheTip();
+
                         },
                         height: 50.0,
                         color: Color(0xFF00474B),
@@ -168,11 +188,14 @@ class _HomePageState extends State<HomePage> {
                   Row(
                     children: [
                       Expanded(child: FlatButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5.0)
+                        ),
                         onPressed: (){
-                          setState(() {
-                            tip=0.5;
-                            calculateTheTip();
-                          });
+
+                            tipC.tip.value=0.5;
+                            tipC.calculateTheTip();
+
                         },
                         height: 50.0,
                         color: Color(0xFF00474B),
@@ -186,21 +209,26 @@ class _HomePageState extends State<HomePage> {
                       Expanded(child: TextField(
                         controller: tipController,
                         onEditingComplete: (){
-                          setState(() {
+
                             if(tipController.text.isNotEmpty){
-                              tip=double.parse(tipController.text)/100;
+                              tipC.tip.value=double.parse(tipController.text)/100;
                             }else{
-                              tip=0;
+                              tipC.tip.value=0;
                             }
                             FocusScope.of(context).unfocus();
-                            calculateTheTip();
-                          });
+                            tipC.calculateTheTip();
+
                         },
                         decoration: InputDecoration(
                             filled: true,
                             fillColor: Color(0xFFF3F8FB),
                             border: InputBorder.none,
                             hintText: "Custom",
+                          hintStyle: TextStyle(
+                            //fontSize: 24.0,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF00474B).withOpacity(0.4)
+                          ),
                         ),
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -217,21 +245,26 @@ class _HomePageState extends State<HomePage> {
                   TextField(
                     controller: personController,
                     onEditingComplete: (){
-                      setState(() {
+
                         if(personController.text.isNotEmpty){
-                          person=int.parse(personController.text);
+                          tipC.person.value=int.parse(personController.text);
                         }else{
-                          person=1;
+                          tipC.person.value=1;
                         }
                         FocusScope.of(context).unfocus();
-                        calculateTheTip();
-                      });
+                        tipC.calculateTheTip();
+
                     },
                     decoration: InputDecoration(
                         filled: true,
                         fillColor: Color(0xFFF3F8FB),
                         border: InputBorder.none,
                         hintText: "eg. 5",
+                        hintStyle: TextStyle(
+                          //fontSize: 24.0,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF00474B).withOpacity(0.4)
+                        ),
                         prefixIcon: Icon(Icons.person)
                     ),
                     textAlign: TextAlign.end,
@@ -242,13 +275,13 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   SizedBox(height: 30.0,),
-                  Container(
+                  Obx(()=>Container(
                     height: 300,
                     width: double.infinity,
                     padding: EdgeInsets.all(30.0),
                     decoration: BoxDecoration(
                         color: Color(0xFF00474B),
-                      borderRadius: BorderRadius.circular(18.0)
+                        borderRadius: BorderRadius.circular(18.0)
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -261,17 +294,17 @@ class _HomePageState extends State<HomePage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text("Tip Amount",style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 24.0,
-                                  fontWeight: FontWeight.w500
+                                    color: Colors.white,
+                                    fontSize: 24.0,
+                                    fontWeight: FontWeight.w500
                                 ),),
                                 SizedBox(height: 5.0,),
                                 Text("/ person",style: TextStyle(
-                                  color: Color(0xFF598689),fontSize: 20.0
+                                    color: Color(0xFF598689),fontSize: 20.0
                                 ),)
                               ],
                             ),
-                            Text("\$$tipPerPerson",style: TextStyle(
+                            Text("\$${tipC.tipPerPerson}",style: TextStyle(
                                 color: Color(0xFF29C0AD),fontSize: 34.0,fontWeight: FontWeight.bold
                             ),)
                           ],
@@ -294,7 +327,7 @@ class _HomePageState extends State<HomePage> {
                                 ),)
                               ],
                             ),
-                            Text("\$${totalPerPerson.toStringAsFixed(2)}",style: TextStyle(
+                            Text("\$${tipC.totalPerPerson.toStringAsFixed(2)}",style: TextStyle(
                                 color: Color(0xFF29C0AD),fontSize: 34.0,fontWeight: FontWeight.bold
                             ),)
                           ],
@@ -311,12 +344,12 @@ class _HomePageState extends State<HomePage> {
                             billController.clear();
                             personController.clear();
                           },height: 50.0,child:Text("Reset",style: TextStyle(
-                            fontSize: 24.0,fontWeight:FontWeight.bold
+                              fontSize: 24.0,fontWeight:FontWeight.bold
                           ),)),
                         )
                       ],
                     ),
-                  )
+                  ))
                 ],
               ),
             ),
