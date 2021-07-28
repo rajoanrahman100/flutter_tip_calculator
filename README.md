@@ -1,6 +1,6 @@
-# fluttertipcalculator
+# Tip Calculator
 
-A new Flutter application.
+A new Flutter application for calculating tips.
 
 ## Getting Started
 
